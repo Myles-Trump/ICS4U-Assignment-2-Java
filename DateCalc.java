@@ -15,9 +15,24 @@ import java.time.LocalDate;
 final class DateCalc {
 
     /**
-    * One Thousand.
+    * Months in a year.
     */
-    public static final double THOUSAND = 1000;
+    public static final int TOTALMONTHS = 12;
+
+    /**
+    * Numerical constants.
+    */
+    public static final int C4 = 4;
+    public static final int C7 = 7;
+    public static final int C100 = 100;
+    public static final int C400 = 400;
+    public static final int C1000 = 1000;
+
+    /**
+    * Doomsday dates.
+    */
+    public static final int[] doomsdayDates =
+        {3, 28, 14, 4, 9, 6, 11, 8, 5, 10, 7, 12};
 
     /**
     * Prevent instantiation.
@@ -35,15 +50,58 @@ final class DateCalc {
     * The dateToDay() function figures out the day the inputted date was on.
     *
     * @return date to day
-    * @param inputtedDay inputted day
+    * @param theDate inputted date
     */
     public static String dateToDay(LocalDate theDate) {
 
-        String yearString = String.valueOf(theDate.getYear());
+        int theYear = theDate.getYear();
+        int theMonth = theDate.getMonthValue();
+        int theDay = theDate.getDayOfMonth();
+        int centuryCode = (int) (theYear / C1000);
+        int shortYear = (theYear - ((int) (theYear / C100)) * C100);
+        int yearDiv = (int) (shortYear / TOTALMONTHS);
+        int yearMod = shortYear % TOTALMONTHS;
+        int yearQuotient = (int) (yearMod / yearDiv);
+        int doomsdaySubtotal = centuryCode + yearDiv + yearMod + yearQuotient;
+        int doomsdayWeekday = (int) (doomsdaySubtotal % C7);
 
-        int centuryCode  = (int) (theDate.getYear() / THOUSAND);
+        int doomsdayDay = doomsdayDates[theMonth - 1];
 
-        return (yearString);
+        if ((((theYear % C4 == 0) && (theYear % C100 != 0)) ||
+            (theYear % C400 == 0)) && (theMonth == 1 || theMonth == 2)) {
+
+            doomsdayDay = doomsdayDay + 1;
+        }
+
+        int dayOffset = theDay - doomsdayDay;
+        int dayOfTheWeekInt = dayOffset % C7;
+
+        String dayOfTheWeek = "Placeholder";
+        switch(dayOfTheWeekInt) {
+            case 0:
+                dayOfTheWeek = "Sunday";
+                break;
+            case 1:
+                dayOfTheWeek = "Monday";
+                break;
+            case 2:
+                dayOfTheWeek = "Tuesday";
+                break;
+            case 3:
+                dayOfTheWeek = "Wednesday";
+                break;
+            case 4:
+                dayOfTheWeek = "Thursday";
+                break;
+            case 5:
+                dayOfTheWeek = "Friday";
+                break;
+            case 6:
+                dayOfTheWeek = "Saturday";
+                break;
+        }
+
+        return (dayOfTheWeek);
     }
 
     /**
