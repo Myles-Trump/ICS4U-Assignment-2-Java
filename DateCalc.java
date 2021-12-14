@@ -20,12 +20,43 @@ final class DateCalc {
     public static final int TOTALMONTHS = 12;
 
     /**
-    * Numerical constants.
+    * Three.
+    */
+    public static final int C3 = 3;
+
+    /**
+    * Four.
     */
     public static final int C4 = 4;
+
+    /**
+    * Five.
+    */
+    public static final int C5 = 5;
+
+    /**
+    * Six.
+    */
+    public static final int C6 = 6;
+
+    /**
+    * Seven.
+    */
     public static final int C7 = 7;
+
+    /**
+    * Hundred.
+    */
     public static final int C100 = 100;
+
+    /**
+    * Four hundred.
+    */
     public static final int C400 = 400;
+
+    /**
+    * Thousand.
+    */
     public static final int C1000 = 1000;
 
     /**
@@ -52,7 +83,7 @@ final class DateCalc {
     * @return date to day
     * @param theDate inputted date
     */
-    public static String dateToDay(LocalDate theDate) {
+    public static String dateToDay(final LocalDate theDate) {
 
         int theYear = theDate.getYear();
         int theMonth = theDate.getMonthValue();
@@ -67,8 +98,8 @@ final class DateCalc {
 
         int doomsdayDay = doomsdayDates[theMonth - 1];
 
-        if ((((theYear % C4 == 0) && (theYear % C100 != 0)) ||
-            (theYear % C400 == 0)) && (theMonth == 1 || theMonth == 2)) {
+        if ((((theYear % C4 == 0) && (theYear % C100 != 0))
+            || (theYear % C400 == 0)) && (theMonth == 1 || theMonth == 2)) {
 
             doomsdayDay = doomsdayDay + 1;
         }
@@ -77,7 +108,7 @@ final class DateCalc {
         int dayOfTheWeekInt = dayOffset % C7;
 
         String dayOfTheWeek = "Placeholder";
-        switch(dayOfTheWeekInt) {
+        switch (dayOfTheWeekInt) {
             case 0:
                 dayOfTheWeek = "Sunday";
                 break;
@@ -87,16 +118,16 @@ final class DateCalc {
             case 2:
                 dayOfTheWeek = "Tuesday";
                 break;
-            case 3:
+            case C3:
                 dayOfTheWeek = "Wednesday";
                 break;
-            case 4:
+            case C4:
                 dayOfTheWeek = "Thursday";
                 break;
-            case 5:
+            case C5:
                 dayOfTheWeek = "Friday";
                 break;
-            case 6:
+            case C6:
                 dayOfTheWeek = "Saturday";
                 break;
         }
