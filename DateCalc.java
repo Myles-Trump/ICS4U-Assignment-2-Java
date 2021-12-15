@@ -85,12 +85,17 @@ final class DateCalc {
     */
     public static String dateToDay(final LocalDate theDate) {
 
+        int dayOfTheWeekInt = 0;
         int theYear = theDate.getYear();
         int theMonth = theDate.getMonthValue();
         int theDay = theDate.getDayOfMonth();
         int centuryCode = (int) (theYear / C1000);
         int shortYear = (theYear - ((int) (theYear / C100)) * C100);
         int yearDiv = (int) (shortYear / TOTALMONTHS);
+        if (yearDiv == 0) {
+            yearDiv = 1;
+            dayOfTheWeekInt = 1;
+        }
         int yearMod = shortYear % TOTALMONTHS;
         int yearQuotient = (int) (yearMod / yearDiv);
         int doomsdaySubtotal = centuryCode + yearDiv + yearMod + yearQuotient;
@@ -105,7 +110,7 @@ final class DateCalc {
         }
 
         int dayOffset = theDay - doomsdayDay;
-        int dayOfTheWeekInt = dayOffset % C7;
+        dayOfTheWeekInt = dayOfTheWeekInt + dayOffset % C7;
 
         String dayOfTheWeek = "Placeholder";
         switch (dayOfTheWeekInt) {
@@ -130,6 +135,9 @@ final class DateCalc {
             case C6:
                 dayOfTheWeek = "Saturday";
                 break;
+            default:
+                dayOfTheWeek = "Noneday";
+                break;
         }
 
         return (dayOfTheWeek);
@@ -144,16 +152,23 @@ final class DateCalc {
         // variables
         String dayFinal;
 
-        final Scanner date = new Scanner(System.in);
+        try {
+            final Scanner date = new Scanner(System.in);
 
-        System.out.print("Input the date (yyyy-mm-dd): ");
+            System.out.print("Input the date (yyyy-mm-dd): ");
 
-        LocalDate theDate = LocalDate.parse(date.nextLine());
+            LocalDate theDate = LocalDate.parse(date.nextLine());
 
-        dayFinal = dateToDay(theDate);
+            dayFinal = dateToDay(theDate);
 
-        System.out.println("\nThe day of " + theDate + " is "
-            + dayFinal + ".");
+            System.out.println("\nThe day of " + theDate + " is "
+                + dayFinal + ".");
+
+        } catch (java.util.InputMismatchException errorCode) {
+            // block of code to handle errors
+            System.out.println("\nYou have not entered a valid input.");
+        }
+
         System.out.println("\nDone.");
     }
 }
