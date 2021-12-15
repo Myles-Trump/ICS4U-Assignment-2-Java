@@ -62,7 +62,7 @@ final class DateCalc {
     /**
     * Doomsday dates.
     */
-    public static final int[] doomsdayDates =
+    public static final int[] DOOMSDAYDATES =
         {3, 28, 14, 4, 9, 6, 11, 8, 5, 10, 7, 12};
 
     /**
@@ -101,7 +101,7 @@ final class DateCalc {
         int doomsdaySubtotal = centuryCode + yearDiv + yearMod + yearQuotient;
         int doomsdayWeekday = (int) (doomsdaySubtotal % C7);
 
-        int doomsdayDay = doomsdayDates[theMonth - 1];
+        int doomsdayDay = DOOMSDAYDATES[theMonth - 1];
 
         if ((((theYear % C4 == 0) && (theYear % C100 != 0))
             || (theYear % C400 == 0)) && (theMonth == 1 || theMonth == 2)) {
