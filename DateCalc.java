@@ -94,7 +94,6 @@ final class DateCalc {
         int yearDiv = (int) (shortYear / TOTALMONTHS);
         if (yearDiv == 0) {
             yearDiv = 1;
-            dayOfTheWeekInt = 1;
         }
         int yearMod = shortYear % TOTALMONTHS;
         int yearQuotient = (int) (yearMod / yearDiv);
